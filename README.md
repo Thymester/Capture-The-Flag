@@ -1,3 +1,7 @@
+# Upcoming Major Update
+
+In the next release the script will support a host computer (as the server) for team play. It will still support solo with the option for teaming (up to 6 players per team).
+
 # Capture the Flag
 
 A command-line Capture the Flag (CTF) application written in Java that introduces basic cybersecurity concepts through hashing, decoding, log analysis, and challenge progression.
