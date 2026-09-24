@@ -1,19 +1,19 @@
-import Methods.DecodeText;
-import Methods.GameState;
-import Methods.HashText;
-import Methods.Terminal;
-import Methods.VerifyFlag;
-import Methods.ViewLogs;
-import Methods.ViewSystem;
+import game.GameState;
 import java.util.Scanner;
+import terminal.Terminal;
+import ui.DecodeText;
+import ui.HashText;
+import ui.VerifyFlag;
+import ui.ViewLogs;
+import ui.ViewSystem;
 
 public class CaptureTheFlag {
     public static void main (String[] args ) {
         GameState gameState = new GameState();
-        gameplayLoop(gameState);
+        gameplayLoop(gameState, new VerifyFlag(gameState));
     }
 
-    private static void gameplayLoop(GameState gameState) {
+    private static void gameplayLoop(GameState gameState, VerifyFlag verifier) {
         try (Scanner scanner = new Scanner(System.in)) {
             while (gameState.isGameRunning()) {
 
@@ -42,6 +42,11 @@ public class CaptureTheFlag {
                     continue;
                 }
 
+                if (gameState.requiresTerminal() && userChoice >= 1 && userChoice <= 5) {
+                    System.out.println("This system rejects menu tools. Open the built-in terminal with option 6.");
+                    continue;
+                }
+
                 switch (userChoice) {
                     case 1: 
                         ViewSystem.viewSystem(gameState);
@@ -50,7 +55,7 @@ public class CaptureTheFlag {
                         ViewLogs.viewLogs(gameState);
                         break;
                     case 3:
-                        VerifyFlag.verifyFlag(scanner, gameState);
+                        verifier.verifyFlag(scanner);
                         break;
                     case 4:
                         HashText.hashText(scanner);
@@ -59,7 +64,7 @@ public class CaptureTheFlag {
                         DecodeText.decodeText(scanner);
                         break;
                     case 6:
-                        Terminal.open(scanner, gameState);
+                        new Terminal(gameState).open(scanner);
                         break;
                     case 7:
                         System.out.println("Thank you for playing Capture the Flag!");
