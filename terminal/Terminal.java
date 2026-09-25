@@ -18,6 +18,11 @@ public class Terminal {
         this.verifier = new VerifyFlag(gameState);
     }
 
+    public Terminal(GameState gameState, VerifyFlag verifier) {
+        this.gameState = gameState;
+        this.verifier = verifier;
+    }
+
     public void open(Scanner scanner) {
         System.out.println("\nConnected to ctf-terminal.");
         System.out.println("Type 'help' for available commands or 'exit' to return to the menu.");

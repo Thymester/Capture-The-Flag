@@ -1,5 +1,6 @@
 import game.GameState;
 import java.util.Scanner;
+import team.TeamClient;
 import terminal.Terminal;
 import ui.DecodeText;
 import ui.HashText;
@@ -9,13 +10,23 @@ import ui.ViewSystem;
 
 public class CaptureTheFlag {
     public static void main (String[] args ) {
-        GameState gameState = new GameState();
-        gameplayLoop(gameState, new VerifyFlag(gameState));
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Welcome to Capture the Flag!");
+            System.out.println("1. Solo Play\n2. Team Play");
+            System.out.print("Choose a mode: ");
+
+            if (scanner.hasNextLine() && scanner.nextLine().trim().equals("2")) {
+                TeamClient.play(scanner);
+                return;
+            }
+
+            GameState gameState = new GameState();
+            gameplayLoop(scanner, gameState, new VerifyFlag(gameState));
+        }
     }
 
-    private static void gameplayLoop(GameState gameState, VerifyFlag verifier) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (gameState.isGameRunning()) {
+    private static void gameplayLoop(Scanner scanner, GameState gameState, VerifyFlag verifier) {
+        while (gameState.isGameRunning()) {
 
                 System.out.println("Welcome to Capture the Flag!");
                 System.out.println("Navigate the menu to slowly figure out how to capture the flag.");
@@ -73,7 +84,6 @@ public class CaptureTheFlag {
                     default:
                         System.out.println("You did not enter a valid input.");
                 }
-            }
         }
     }
 }
