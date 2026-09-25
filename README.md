@@ -499,4 +499,4 @@ Possible future improvements include:
 
 ## License
 
-No license file is currently included in the source repository. Add a license before distributing or publishing the project.
+MIT License. Refer to the repo license file to learn more.
